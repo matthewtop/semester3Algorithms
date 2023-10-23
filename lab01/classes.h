@@ -71,6 +71,7 @@ public:
         temp-> next=node;
         node-> prev=temp;
         tail=node;
+        size++;
 
     }
 
@@ -84,18 +85,16 @@ public:
         if(tail!= nullptr){
             tail=node;
         }
+        size++;
     }
 
     void printList() {
-        if(size<1){
-            cout<<"Lista jest pusta. Dodaj dane"<<endl;
-        } else{
         Node* temp = head;
+        int index = 1;
         while (temp != nullptr) {
-            cout << "Brand: " << temp->data.brand << ", Model: " << temp->data.model << ", Power: " << temp->data.power
-                 << endl;
+            cout << index << ". Brand: " << temp->data.brand << ", Model: " << temp->data.model << ", Power: " << temp->data.power << endl;
             temp = temp->next;
-        }
+            index++;
         }
     }
 
@@ -110,6 +109,7 @@ public:
                 tail = nullptr;
             }
             delete nodeToDelete;
+            size--;
         }
     }
 
@@ -123,6 +123,7 @@ public:
                 head = nullptr;
             }
             delete nodeToDelete;
+            size--;
         }
     }
 
@@ -136,13 +137,23 @@ public:
         size = 0;
     }
 
+    Data getDataFromIndex(int index) {
+        if (index < 1 || index > size) {
+            cerr << "Indeks poza zakresem." << endl;
+            // Zwracamy pusty obiekt Data, aby wskazać błąd
+            return Data();
+        }
 
+        Node* temp = head;
+        for (int i = 1; i < index; i++) {
+            temp = temp->next;
+        }
+
+        // Zwracamy dane znalezione pod podanym indeksem
+        return temp->data;
+    }
 
 
 };
-
-
-
-
 
 #endif //LAB01_CLASSES_H

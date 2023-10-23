@@ -26,7 +26,6 @@ int main() {
 
 
     do {
-        cout << "*******************************************" << endl;
         cout << "************Lista Dwukierunkowa************" << endl;
         cout << "Wybierz opcje:" << endl;
         cout << "1. Dodaj dane do konca listy" << endl;
@@ -134,7 +133,15 @@ int main() {
             }
             case 5: {
                 //zwrocenie danych itego elementu listy
-
+                int index;
+                cout << "Indeks elementu do wyszukania: ";
+                cin >> index;
+                Data carData = carList.getDataFromIndex(index);
+                if (carData.brand.empty() || carData.model.empty()) {
+                    cout << "Brak danych" << endl;
+                } else {
+                    cout << "Brand: " << carData.brand << ", Model: " << carData.model << ", Power: " << carData.power << endl;
+                }
                 break;
             }
             case 6:{
