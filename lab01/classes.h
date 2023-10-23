@@ -1,9 +1,9 @@
 #ifndef LAB01_CLASSES_H
 #define LAB01_CLASSES_H
 #include <string>
-#include <utility>
 
 using namespace std;
+
 class Data{
 public:
     string brand;
@@ -15,10 +15,7 @@ public:
     Data(const string& brand, const string& model, int power)
             : brand(brand), model(model), power(power) {}
 
-
     ~Data()=default;
-
-
 };
 
 class Node{
@@ -39,7 +36,6 @@ public:
     }
 
     ~Node()= default;
-
 };
 
 class List{
@@ -54,7 +50,6 @@ public:
         size=0;
     }
     ~List()= default;
-
 
     void insertAtTail(const Data& carData){
         if (head==nullptr){
@@ -76,19 +71,18 @@ public:
     }
 
     void insertAtHead(const Data& carData){
-        Node* node= new Node(carData);
-        node->next=head;
-        if (head!= nullptr){
-            head->prev=node;
+        Node* node = new Node(carData);
+        node->next = head;
+        if (head != nullptr) {
+            head->prev = node;
+        } else {
+            tail = node;
         }
-        head=node;
-        if(tail!= nullptr){
-            tail=node;
-        }
+        head = node;
         size++;
     }
 
-    void printList() {
+    void printList() const {
         Node* temp = head;
         int index = 1;
         while (temp != nullptr) {
@@ -97,7 +91,6 @@ public:
             index++;
         }
     }
-
 
     void deleteFirstElement() {
         if (head != nullptr) {
@@ -124,7 +117,52 @@ public:
             }
             delete nodeToDelete;
             size--;
+
+            if (size == 0) {
+                head = nullptr;
+                tail = nullptr;
+            }
         }
+    }
+    Data deleteByIndex(int index) {
+        if (index < 1 || index > size) {
+            cout << "Index poza zakresem." << endl;
+        }
+
+        Node* temp = head;
+        for (int i = 1; i < index; i++) {
+            temp = temp->next;
+        }
+
+        if (temp->prev != nullptr) {
+            temp->prev->next = temp->next;
+        } else {
+            head = temp->next;
+        }
+
+        if (temp->next != nullptr) {
+            temp->next->prev = temp->prev;
+        } else {
+            tail = temp->prev;
+        }
+
+        Data deletedData = temp->data;
+        delete temp;
+        size--;
+
+        return deletedData;
+    }
+
+     void podmiana(int index, const Data& newData) const {
+        if (index < 1 || index > size) {
+            cout << "Index poza zakresem." << endl;
+        }
+
+        Node* temp = head;
+        for (int i = 1; i < index; i++) {
+            temp = temp->next;
+        }
+        temp->data = newData;
     }
 
     void clearList() {
@@ -137,11 +175,9 @@ public:
         size = 0;
     }
 
-    Data getDataFromIndex(int index) {
+    Data getDataFromIndex(int index) const {
         if (index < 1 || index > size) {
-            cerr << "Indeks poza zakresem." << endl;
-            // Zwracamy pusty obiekt Data, aby wskazać błąd
-            return Data();
+            cerr << "Index poza zakresem." << endl;
         }
 
         Node* temp = head;
@@ -149,11 +185,19 @@ public:
             temp = temp->next;
         }
 
-        // Zwracamy dane znalezione pod podanym indeksem
         return temp->data;
     }
 
-
+    string toString() const {
+        string result;
+        Node* temp = head;
+        int index = 1;
+        while (temp != nullptr) {
+            result += to_string(index) + ". Brand: " + temp->data.brand + ", Model: " + temp->data.model + ", Power: " + to_string(temp->data.power) + "\n";
+            temp = temp->next;
+            index++;
+        }
+        return result;
+    }
 };
-
 #endif //LAB01_CLASSES_H
