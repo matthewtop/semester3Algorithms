@@ -177,7 +177,7 @@ public:
 
     Data getDataFromIndex(int index) const {
         if (index < 1 || index > size) {
-            cerr << "Index poza zakresem." << endl;
+            cout << "Index poza zakresem." << endl;
         }
 
         Node* temp = head;
