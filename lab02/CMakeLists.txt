@@ -4,4 +4,5 @@ project(lab02)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(lab02 main.cpp
-        classes.h)
+        DynamicArray.h
+        View.h)

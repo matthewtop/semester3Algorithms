@@ -1,44 +1,92 @@
 #include <iostream>
 #include <time.h>
 #include <string>
-#include "classes.h"
-
+#include "DynamicArray.h"
+#include "View.h"
 using namespace std;
 
 int main() {
 
-    auto* tablica = new DynamicArray<int>;
+    View view;
+
+    DynamicArray<int> dynamicArray;
     int wybor;
     bool dzialanie=true;
 
     do {
-        cout << "Wybierz opcje:" << endl;
-        cout<<"1. Dodaj dane "<<endl;
-        cout<<"2. Wyszukaj element po indeksie"<<endl;
-        cout<<"3. Wyczysc tablice"<<endl;
-        cout<<"4. Posortuj tablice babelkowo"<<endl;
-
+        View::mainMenu();
         cin>>wybor;
         switch(wybor) {
             case 1: {
+                dynamicArray.insert();
+                break;
+            }
+            case 2:{
+                int numOfElem;
+                cout<<"Podaj ilosc elementow do wygenerowania i wprowadzenia: "<<endl;
+                //todo OGARNAC SEED
+                cin>>numOfElem;
                 clock_t t1 = clock();
+                dynamicArray.insertRandomValues(dynamicArray, numOfElem);
                 clock_t t2 = clock();
                 double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
                 double miliseconds = seconds*1000;
                 cout << miliseconds << " ms" << endl;
-                tablica->add(3);
-
-                break;
-            }
-            case 2: {
                 break;
             }
             case 3: {
+                int index;
+                cout<<"Podaj index: ";
+                cin>>index;
+                clock_t t1 = clock();
+                try{
+                    int wynik = dynamicArray.search(index);
+                    cout<<wynik<<endl;
+                }
+                catch(const char *exception) {
+                    cout<<"Blad: " <<exception<<endl;
+                }
+                clock_t t2 = clock();
+                double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+                double miliseconds = seconds*1000;
+                cout << miliseconds << " ms" << endl;
                 break;
             }
             case 4: {
+                clock_t t1 = clock();
+                dynamicArray.replace(dynamicArray);
+                clock_t t2 = clock();
+                double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+                double miliseconds = seconds*1000;
+                cout << miliseconds << " ms" << endl;
                 break;
             }
+            case 5: {
+                clock_t t1 = clock();
+                dynamicArray.clearArray();
+                clock_t t2 = clock();
+                double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+                double miliseconds = seconds*1000;
+                cout << miliseconds << " ms" << endl;
+                break;
+            }
+            case 6: {
+                dynamicArray.bubblesort(dynamicArray);
+                break;
+            }
+            case 7:{
+                clock_t t1 = clock();
+                dynamicArray.printArray(dynamicArray);
+                //TODO: ZROB TOSTRING
+                clock_t t2 = clock();
+                double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+                double miliseconds = seconds*1000;
+                cout << miliseconds << " ms" << endl;
+                break;
+            }
+            case 8:
+                dzialanie=false;
+                break;
             default: {
                 cout << "Nieprawidlowy wybor" << endl;
                 break;
