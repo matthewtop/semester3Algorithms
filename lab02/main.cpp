@@ -63,20 +63,13 @@ int main() {
             case 7:{
                 clock_t t1 = clock();
                 cout<< dynamicArray.toString() <<endl;
-                //dynamicArray.toString();
-                //TODO: ZROB TOSTRING
                 clock_t t2 = clock();
                 double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
                 double miliseconds = seconds*1000;
                 cout << miliseconds << " ms" << endl;
                 break;
             }
-            case 8:{
-                dynamicArray.printArray();
-                break;
-
-            };
-            case 9:
+            case 8:
                 dzialanie=false;
                 break;
             default: {
