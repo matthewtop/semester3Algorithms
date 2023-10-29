@@ -49,66 +49,16 @@ public:
         cout << miliseconds << " ms" << endl;
     }
 
-    void insertRandomValues(DynamicArray<T> &dynamicArray, int numOfElem){
+    void insertRandomValues(DynamicArray<T> &dynamicArray){
+        int numOfElem;
+        cout<<"Podaj ilosc elementow do wygenerowania i wprowadzenia: "<<endl;
+        //todo OGARNAC SEED
+        cin>>numOfElem;
+        clock_t t1 = clock();
         srand(time(nullptr));
-        for (int i = 0; i<numOfElem ; i++) {
+        for (int i = 0; i<numOfElem-1 ; i++) {
             T randomValue = rand();
             dynamicArray.insert(randomValue);
-        }
-    }
-
-    T& search(int index){
-        if(index<0||index>=size)
-            throw "Out of bounds exception";
-        return dynamicArray[index];
-    }
-
-    void replace(DynamicArray<T> &dynamicArray){
-        int index;
-        T value;
-        cout << "Podaj index do podmiany: ";
-        cin >> index;
-        cout << endl;
-        cout << "Wprowadz wartosc: ";
-        cin >> value;
-        if (index<0 || index >= dynamicArray.size){
-            cout<<"Zly index"<<endl;
-            return;
-        }
-        dynamicArray[index]=value;
-    }
-
-    void clearArray(){
-        delete[] dynamicArray;
-        size=0;
-        maxSize=50;
-        dynamicArray = new T[maxSize];
-    }
-
-    void printArray(DynamicArray<T> &dynamicArray){
-        for (int i = 0; i < dynamicArray.size; i++) {
-            cout<<dynamicArray.dynamicArray[i]<<" ";
-        }
-        cout<<endl;
-    }
-
-
-    void bubblesort(DynamicArray<T>& dynamicArray) {
-        bool swap;
-        clock_t t1 = clock();
-        for (int i = 0; i < dynamicArray.size - 1; i++) {
-            swap = false;
-            for (int j = 0; j < dynamicArray.size - i - 1; j++) {
-                if (dynamicArray[j] > dynamicArray[j + 1]) {
-                    T temp = dynamicArray[j];
-                    dynamicArray[j] = dynamicArray[j + 1];
-                    dynamicArray[j + 1] = temp;
-                    swap = true;
-                }
-            }
-            if (swap==false) {
-                break;
-            }
         }
         clock_t t2 = clock();
         double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
@@ -116,23 +66,68 @@ public:
         cout << miliseconds << " ms" << endl;
     }
 
-    T& operator[] (const int index){
-        if (index<0 || index >= size){
-            throw "zly index";
-        }
+    T& search(int index){
+        if(index<0||index>=size)
+            cout<<"Niepoprawny index";
         return dynamicArray[index];
     }
 
-    string toString(DynamicArray<T> &dynamicArray){
+    void replace(){
+        int index;
+        T value;
+        cout << "Podaj index do podmiany: ";
+        cin >> index;
+        cout << "Wprowadz wartosc: ";
+        cin >> value;
+        clock_t t1 = clock();
+        if (index<0 || index >= size){
+            cout<<"Zly index"<<endl;
+            return;
+        }
+        dynamicArray[index]=value;
+        clock_t t2 = clock();
+        double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+        double miliseconds = seconds*1000;
+        cout << miliseconds << " ms" << endl;
+    }
+
+    void clearArray(){
+        clock_t t1 = clock();
+        delete[] dynamicArray;
+        size=0;
+        maxSize=50;
+        dynamicArray = new T[maxSize];
+        clock_t t2 = clock();
+        double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+        double miliseconds = seconds*1000;
+        cout << miliseconds << " ms" << endl;
+    }
+
+    void printArray(){
+        for (int i = 0; i < size; i++) {
+            cout<<dynamicArray[i]<<" ";
+        }
+    }
+
+    string toString() {
         string result;
-        for(int i=0; i<dynamicArray.maxSize; i++){
-            result+= to_string(dynamicArray[i]);
-            if (i<size -1){
-                result += ", ";
+        for (int i = 0; i < size; i++) {
+            result += to_string(dynamicArray[i]) + " ";
+        }
+        return result;
+    }
+
+    void bubblesort() {
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (dynamicArray[j] > dynamicArray[j + 1]) {
+                    T temp = dynamicArray[j];
+                    dynamicArray[j] = dynamicArray[j + 1];
+                    dynamicArray[j + 1] = temp;
+                    //swap = true;
+                }
             }
         }
-        result += "]";
-        return  result;
     }
 };
 #endif //LAB02_DYNAMICARRAY_H

@@ -22,16 +22,7 @@ int main() {
                 break;
             }
             case 2:{
-                int numOfElem;
-                cout<<"Podaj ilosc elementow do wygenerowania i wprowadzenia: "<<endl;
-                //todo OGARNAC SEED
-                cin>>numOfElem;
-                clock_t t1 = clock();
-                dynamicArray.insertRandomValues(dynamicArray, numOfElem);
-                clock_t t2 = clock();
-                double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
-                double miliseconds = seconds*1000;
-                cout << miliseconds << " ms" << endl;
+                dynamicArray.insertRandomValues(dynamicArray);
                 break;
             }
             case 3: {
@@ -53,30 +44,26 @@ int main() {
                 break;
             }
             case 4: {
-                clock_t t1 = clock();
-                dynamicArray.replace(dynamicArray);
-                clock_t t2 = clock();
-                double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
-                double miliseconds = seconds*1000;
-                cout << miliseconds << " ms" << endl;
+                dynamicArray.replace();
                 break;
             }
             case 5: {
-                clock_t t1 = clock();
                 dynamicArray.clearArray();
+                break;
+            }
+            case 6: {
+                clock_t t1 = clock();
+                dynamicArray.bubblesort();
                 clock_t t2 = clock();
                 double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
                 double miliseconds = seconds*1000;
                 cout << miliseconds << " ms" << endl;
-                break;
-            }
-            case 6: {
-                dynamicArray.bubblesort(dynamicArray);
                 break;
             }
             case 7:{
                 clock_t t1 = clock();
-                dynamicArray.printArray(dynamicArray);
+                cout<< dynamicArray.toString() <<endl;
+                //dynamicArray.toString();
                 //TODO: ZROB TOSTRING
                 clock_t t2 = clock();
                 double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
@@ -84,7 +71,12 @@ int main() {
                 cout << miliseconds << " ms" << endl;
                 break;
             }
-            case 8:
+            case 8:{
+                dynamicArray.printArray();
+                break;
+
+            };
+            case 9:
                 dzialanie=false;
                 break;
             default: {
