@@ -6,9 +6,6 @@
 using namespace std;
 
 int main() {
-
-    //View view;
-
     DynamicArray<int> dynamicArray;
     int wybor;
     bool dzialanie=true;
@@ -30,13 +27,8 @@ int main() {
                 cout<<"Podaj index: ";
                 cin>>index;
                 clock_t t1 = clock();
-                try{
-                    int wynik = dynamicArray.search(index);
-                    cout<<wynik<<endl;
-                }
-                catch(const char *exception) {
-                    cout<<"Blad: " <<exception<<endl;
-                }
+                int wynik = dynamicArray.search(index);
+                cout<<wynik<<endl;
                 clock_t t2 = clock();
                 double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
                 double miliseconds = seconds*1000;
@@ -52,21 +44,11 @@ int main() {
                 break;
             }
             case 6: {
-                clock_t t1 = clock();
                 dynamicArray.bubblesort();
-                clock_t t2 = clock();
-                double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
-                double miliseconds = seconds*1000;
-                cout << miliseconds << " ms" << endl;
                 break;
             }
             case 7:{
-                clock_t t1 = clock();
                 cout<< dynamicArray.toString() <<endl;
-                clock_t t2 = clock();
-                double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
-                double miliseconds = seconds*1000;
-                cout << miliseconds << " ms" << endl;
                 break;
             }
             case 8:

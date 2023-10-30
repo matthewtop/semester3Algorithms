@@ -24,14 +24,17 @@ public:
         for(int i=0; i<size;i++){
             temp[i] = dynamicArray[i];
         }
-
         delete [] dynamicArray;
         dynamicArray=temp;
     }
 
-    void insert(T element){
+    void checkSize(){
         if(size >= maxSize)
             addMaxSize();
+    }
+
+    void insert(T element){
+        checkSize();
         dynamicArray[size++]=element;
     }
 
@@ -40,8 +43,7 @@ public:
         cout<<"Podaj element: "<<endl;
         cin>>element;
         clock_t t1 = clock();
-        if(size >= maxSize)
-            addMaxSize();
+        checkSize();
         dynamicArray[size++]=element;
         clock_t t2 = clock();
         double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
@@ -52,7 +54,6 @@ public:
     void insertRandomValues(DynamicArray<T> &dynamicArray){
         int numOfElem;
         cout<<"Podaj ilosc elementow do wygenerowania i wprowadzenia: "<<endl;
-        //todo OGARNAC SEED
         cin>>numOfElem;
         if(numOfElem<0)
             cout<<"Niepoprawna wartosc"<<endl;
@@ -107,13 +108,19 @@ public:
 
     string toString() {
         string result;
+        clock_t t1 = clock();
         for (int i = 0; i < size; i++) {
             result += to_string(dynamicArray[i]) + " ";
         }
+        clock_t t2 = clock();
+        double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+        double miliseconds = seconds*1000;
+        cout << miliseconds << " ms" << endl;
         return result;
     }
 
     void bubblesort() {
+        clock_t t1 = clock();
         for (int i = 0; i < size - 1; i++) {
             for (int j = 0; j < size - i - 1; j++) {
                 if (dynamicArray[j] > dynamicArray[j + 1]) {
@@ -123,6 +130,10 @@ public:
                 }
             }
         }
+        clock_t t2 = clock();
+        double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+        double miliseconds = seconds*1000;
+        cout << miliseconds << " ms" << endl;
     }
 };
 #endif //LAB02_DYNAMICARRAY_H

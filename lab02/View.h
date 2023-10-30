@@ -1,14 +1,7 @@
-//
-// Created by mateu on 29.10.2023.
-//
-
 #ifndef LAB02_VIEW_H
 #define LAB02_VIEW_H
-
-
 class View {
 public:
-
     static void mainMenu(){
         cout << "Wybierz opcje:" << endl;
         cout<<"1. Dodaj dane "<<endl;
@@ -20,8 +13,5 @@ public:
         cout<<"7. Wyswietl tablice"<<endl;
         cout<<"8. Zakoncz prace programu"<<endl;
     }
-
 };
-
-
 #endif //LAB02_VIEW_H
