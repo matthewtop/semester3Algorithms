@@ -7,7 +7,7 @@ using namespace std;
 
 int main() {
 
-    View view;
+    //View view;
 
     DynamicArray<int> dynamicArray;
     int wybor;

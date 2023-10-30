@@ -54,6 +54,8 @@ public:
         cout<<"Podaj ilosc elementow do wygenerowania i wprowadzenia: "<<endl;
         //todo OGARNAC SEED
         cin>>numOfElem;
+        if(numOfElem<0)
+            cout<<"Niepoprawna wartosc"<<endl;
         clock_t t1 = clock();
         srand(time(nullptr));
         for (int i = 0; i<numOfElem-1 ; i++) {
@@ -103,12 +105,6 @@ public:
         cout << miliseconds << " ms" << endl;
     }
 
-    void printArray(){
-        for (int i = 0; i < size; i++) {
-            cout<<dynamicArray[i]<<" ";
-        }
-    }
-
     string toString() {
         string result;
         for (int i = 0; i < size; i++) {
@@ -124,7 +120,6 @@ public:
                     T temp = dynamicArray[j];
                     dynamicArray[j] = dynamicArray[j + 1];
                     dynamicArray[j + 1] = temp;
-                    //swap = true;
                 }
             }
         }
