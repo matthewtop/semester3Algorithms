@@ -24,13 +24,20 @@ public:
         for(int i=0; i<size;i++){
             temp[i] = dynamicArray[i];
         }
-        delete [] dynamicArray;
+        delete[] dynamicArray;
         dynamicArray=temp;
     }
 
     void checkSize(){
         if(size >= maxSize)
             addMaxSize();
+    }
+
+    void checkIfArrayIsNotEmpty(){
+        if(size==0){
+            cout<<"Tablica jest pusta"<<endl;
+            return;
+        }
     }
 
     void insert(T element){
@@ -70,12 +77,14 @@ public:
     }
 
     T& search(int index){
-        if(index<0||index>=size)
+        checkIfArrayIsNotEmpty();
+        if(index>=size)
             cout<<"Niepoprawny index";
         return dynamicArray[index];
     }
 
     void replace(){
+        checkIfArrayIsNotEmpty();
         int index;
         T value;
         cout << "Podaj index do podmiany: ";
@@ -95,6 +104,7 @@ public:
     }
 
     void clearArray(){
+        checkIfArrayIsNotEmpty();
         clock_t t1 = clock();
         delete[] dynamicArray;
         size=0;
@@ -107,6 +117,7 @@ public:
     }
 
     string toString() {
+        checkIfArrayIsNotEmpty();
         string result;
         clock_t t1 = clock();
         for (int i = 0; i < size; i++) {
@@ -120,6 +131,7 @@ public:
     }
 
     void bubblesort() {
+        checkIfArrayIsNotEmpty();
         clock_t t1 = clock();
         for (int i = 0; i < size - 1; i++) {
             for (int j = 0; j < size - i - 1; j++) {
