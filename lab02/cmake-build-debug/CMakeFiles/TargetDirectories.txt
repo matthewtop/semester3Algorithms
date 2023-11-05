@@ -1,3 +1,0 @@
-D:/dev/semestr3/algo2/lab02/cmake-build-debug/CMakeFiles/lab02.dir
-D:/dev/semestr3/algo2/lab02/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/dev/semestr3/algo2/lab02/cmake-build-debug/CMakeFiles/rebuild_cache.dir
