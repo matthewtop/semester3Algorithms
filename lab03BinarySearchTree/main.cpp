@@ -20,11 +20,11 @@ int main() {
             }
             case 2: {
                 int index = -1;
-                Tree<int> *znaleziony = tree.znajdz(tree.getWartosc(), index);
+                bool znaleziony = tree.znajdz(tree.getWartosc(),index);
                 if (znaleziony) {
                     cout << "Znaleziono wezel, jego index to: " << index << endl;
                 } else {
-                    cout << "wezel nie zostal znaleziony." << endl;
+                    View::wezelNieIstnieje();
                 }
                 break;
             }

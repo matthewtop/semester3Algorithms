@@ -83,14 +83,14 @@ public:
         }
     }
 
-    Tree* znajdz(T key, int&index){
+    bool znajdz(T key, int&index){
         if(this== nullptr){
-            return nullptr;
+            return false;
         }
 
         if (this->key==key){
             index = this->index;
-            return this;
+            return true;
         } else if (key< this->key){
             if (left!= nullptr){
                 return left->znajdz(key, index);
@@ -100,7 +100,7 @@ public:
                 return right->znajdz(key, index);
             }
         }
-        return nullptr;
+        return false;
     }
 
     bool checkIfTreeIsNotEmpty(){
@@ -198,7 +198,7 @@ public:
             left->wyswietl();
         }
     }
-    
+
     void zmienKorzen(T nowy){
         this->key=nowy;
     }
