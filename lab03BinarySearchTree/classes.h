@@ -98,10 +98,6 @@ public:
     }
 
     bool znajdz(T key, int&index){
-        if(this== nullptr){
-            return false;
-        }
-
         if (this->key==key){
             index = this->index;
             return true;
@@ -153,33 +149,17 @@ public:
     }
 
     bool usun(T key) {
-        if (key < this->key) {
-            if (left != nullptr) {
-                if (left->key == key) {
-                    return deleteLeft();
-                } else {
-                    return left->usun(key);
-                }
+        int index;
+        if (znajdz(key, index)) {
+            if (key < this->key) {
+                return deleteLeft();
+            } else if (key > this->key) {
+                return deleteRight();
+            } else {
+                delete this;
+                return true;
             }
-            else {
-                View::wezelNieIstnieje();
-                return false;
-            }
-        }
-        else if (key > this->key) {
-            if (right != nullptr) {
-                if (right->key == key) {
-                    return deleteRight();
-                } else {
-                    return right->usun(key);
-                }
-            }
-            else {
-                View::wezelNieIstnieje();
-                return false;
-            }
-        }
-        else {
+        } else {
             View::wezelNieIstnieje();
             return false;
         }
