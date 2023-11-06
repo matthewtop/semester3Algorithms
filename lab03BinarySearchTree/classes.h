@@ -38,6 +38,20 @@ public:
         }
     }
 
+    void dodajLosowo(int ilosc){
+        for (int i = 0; i < ilosc; i++) {
+            T losowaWartosc=(rand()%101);
+            dodaj(losowaWartosc);
+        }
+    }
+
+    int getIlosc(){
+        int ilosc;
+        cout<<"Podaj ilosc: ";
+        cin>>ilosc;
+        return ilosc;
+    }
+
     T getWartosc(){
         T wartosc;
         cout<<"Podaj wartosc: ";
@@ -73,7 +87,7 @@ public:
                 delete left;
                 left = nullptr;
             }
-            if (right != nullptr) {
+            else if (right != nullptr) {
                 right->clear();
                 delete right;
                 right = nullptr;
@@ -210,7 +224,10 @@ public:
         this->key=nowy;
     }
 
+
 };
+
+
 
 
 #endif //LAB03_CLASSES_H

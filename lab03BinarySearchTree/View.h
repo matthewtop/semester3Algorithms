@@ -7,6 +7,7 @@ public:
 
     static void mainMenu(){
         cout<<"===================================="<<endl;
+        cout<<"|       0. Dodaj elementy losowe   |"<<endl;
         cout<<"|       1. Dodaj element           |"<<endl;
         cout<<"|       2. Wyszukaj element        |"<<endl;
         cout<<"|       3. Usun wezel              |"<<endl;
@@ -16,7 +17,7 @@ public:
         cout<<"|       7. Wyznacz wysokosc        |"<<endl;
         cout<<"|       8. Wyswietl drzewo         |"<<endl;
         cout<<"|       9. Zmien wartosc korzenia  |"<<endl;
-        cout<<"|       10. Zakoncz prace programu |"<<endl;
+        cout<<"|       10.Zakoncz prace programu  |"<<endl;
         cout<<"===================================="<<endl;
     }
 
