@@ -45,67 +45,74 @@ public:
         return wartosc;
     }
 
-    void inOrder(){
-        if (left != nullptr) {
-            left->inOrder();
-        }
-        cout << key << " ";
-        if (right != nullptr) {
-            right->inOrder();
-        }
+    void preorder(){
+            cout << key << " "; //korzen
+
+            if (left != nullptr) {
+                left->preorder();
+            }
+            if (right != nullptr) {
+                right->preorder();
+            }
     }
 
-    void preorder(){
-        cout<<key<<" "; //korzen
-
-        if(left != nullptr){
-            left->preorder();
-        }
-        if (right!= nullptr){
-            right->preorder();
-        }
+    void inOrder(){
+            if (left != nullptr) {
+                left->inOrder();
+            }
+            cout << key << " ";
+            if (right != nullptr) {
+                right->inOrder();
+            }
     }
 
     void clear(){
-        if (left != nullptr){
-            left->clear();
-            delete left;
-            left= nullptr;
-        }
-        if(right!= nullptr){
-            right->clear();
-            delete right;
-            right= nullptr;
+        if(checkIfTreeIsNotEmpty()== true) {
+            if (left != nullptr) {
+                left->clear();
+                delete left;
+                left = nullptr;
+            }
+            if (right != nullptr) {
+                right->clear();
+                delete right;
+                right = nullptr;
+            }
+        } else{
+            View::treeIsEmpty();
         }
     }
 
-    Tree* findNode(T key, int&foundIndex){
+    Tree* znajdz(T key, int&index){
         if(this== nullptr){
             return nullptr;
         }
 
         if (this->key==key){
-            foundIndex = this->index;
+            index = this->index;
             return this;
         } else if (key< this->key){
             if (left!= nullptr){
-                return left->findNode(key, foundIndex);
+                return left->znajdz(key, index);
             }
         } else{
             if (right != nullptr){
-                return right->findNode(key, foundIndex);
+                return right->znajdz(key, index);
             }
         }
         return nullptr;
     }
 
-    int getHeight(){
-        int height = 0;
-        if (this == nullptr) {
-            cout << "Drzewo jest puste" << endl;
-            return 0;
+    bool checkIfTreeIsNotEmpty(){
+        if (left == nullptr && right == nullptr) {
+            return false;
+        } else{
+            return true;
         }
-        else{
+    }
+
+    int getHeight(){
+        if(checkIfTreeIsNotEmpty()== true){
             int leftHeight = 0;
             int rightHeight = 0;
 
@@ -119,70 +126,82 @@ public:
 
             return max(leftHeight, rightHeight) + 1;
         }
+        else{
+            return 1;
+        }
     }
 
     void heightMessage(){
         cout<<"Wysokosc drzewa wynosi: "<<getHeight()<<endl;
     }
 
-    bool usun(T key){
-        if (key<this->key){
-            if(left!= nullptr){
-                if (left->key==key){
-                    delete left;
-                    left= nullptr;
-                    cout<<"Udalo sie usunac wezel"<<endl;
-                    return true;
-                } else{
+    bool usun(T key) {
+        if (key < this->key) {
+            if (left != nullptr) {
+                if (left->key == key) {
+                    return deleteLeft();
+                } else {
                     return left->usun(key);
                 }
+            } else {
+                View::wezelNieIstnieje();
+                return false;
             }
-        } else if (key > this->key){
-            if(right!= nullptr){
-                if (right->key==key){
-                    delete right;
-                    right= nullptr;
-                    cout<<"Udalo sie usunac wezel"<<endl;
-                    return true;
-                }else{
+        } else if (key > this->key) {
+            if (right != nullptr) {
+                if (right->key == key) {
+                    return deleteRight();
+                } else {
                     return right->usun(key);
                 }
+            } else {
+                View::wezelNieIstnieje();
+                return false;
             }
+        } else {
+            View::wezelNieIstnieje();
+            return false;
         }
-        cout<<"Wezel nie istnieje"<<endl;
+    }
+
+    bool deleteLeft() {
+        if (left != nullptr) {
+            delete left;
+            left = nullptr;
+            View::sukces();
+            return true;
+        }
         return false;
     }
 
-    void wyswietl(int poziom = 0) {
-        if (this == nullptr) {
-            cout<<"Drzewo jest puste"<<endl;
-            return;
-        }
-
+    bool deleteRight() {
         if (right != nullptr) {
-            right->wyswietl(poziom + 1);
+            delete right;
+            right = nullptr;
+            View::sukces();
+            return true;
+        }
+        return false;
+    }
+
+    void wyswietl() {
+        if (right != nullptr) {
+            right->wyswietl();
         }
 
-        for (int i = 0; i < poziom; i++) {
+        for (int i = 0; i < index; i++) {
             cout << "    ";
         }
         cout << key << endl;
 
         if (left != nullptr) {
-            left->wyswietl(poziom + 1);
+            left->wyswietl();
         }
     }
-    void wyswietlLewo(){
-
-    }
-
+    
     void zmienKorzen(T nowy){
         this->key=nowy;
     }
-
-
-
-
 
 };
 

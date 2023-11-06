@@ -1,7 +1,3 @@
-//
-// Created by mateu on 31.10.2023.
-//
-
 #ifndef LAB03_VIEW_H
 #define LAB03_VIEW_H
 
@@ -21,6 +17,18 @@ public:
         cout<<"8. Wyswietl drzewo"<<endl;
         cout<<"9. Zmien wartosc korzenia"<<endl;
         cout<<"10. Zakoncz prace programu"<<endl;
+    }
+
+    static void treeIsEmpty(){
+        cout<<"Drzewo jest puste"<<endl;
+    }
+
+    static void wezelNieIstnieje(){
+        cout << "Wezel nie istnieje" << endl;
+    }
+
+    static void sukces(){
+        cout << "Udalo sie" << endl;
     }
 };
 

@@ -19,12 +19,12 @@ int main() {
                 break;
             }
             case 2: {
-                int foundIndex = -1;
-                Tree<int> *foundNode = tree.findNode(tree.getWartosc(), foundIndex);
-                if (foundNode) {
-                    cout << "Znaleziono wezel, jego index to: " << foundIndex << endl;
+                int index = -1;
+                Tree<int> *znaleziony = tree.znajdz(tree.getWartosc(), index);
+                if (znaleziony) {
+                    cout << "Znaleziono wezel, jego index to: " << index << endl;
                 } else {
-                    cout << "nie zostal znaleziony." << endl;
+                    cout << "wezel nie zostal znaleziony." << endl;
                 }
                 break;
             }
