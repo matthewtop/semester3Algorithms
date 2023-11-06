@@ -1,7 +1,3 @@
-//
-// Created by mateu on 31.10.2023.
-//
-
 #ifndef LAB03_CLASSES_H
 #define LAB03_CLASSES_H
 
@@ -12,29 +8,30 @@ using namespace std;
 template <typename T>
 class Tree{
 public:
-    Tree() {}
-
     T key;
     Tree *left;
     Tree *right;
     Tree *parent;
+    int index;
 
-
-    Tree(T key) : key(key), left(nullptr), right(nullptr), parent(nullptr) {}
+    Tree() : key(T()), left(nullptr), right(nullptr), parent(nullptr), index(-1) {}
+    Tree(T key, int index) : key(key), left(nullptr), right(nullptr), parent(nullptr), index(index) {}
     ~Tree()= default;
 
     void dodaj(T key) {
         if (key < this->key) {
             if (left == nullptr) {
-                left = new Tree(key);
+                left = new Tree(key, index+1);
                 left->parent = this;
+                left->index = index + 1;
             } else {
                 left->dodaj(key);
             }
         } else if (key > this->key) {
             if (right == nullptr) {
-                right = new Tree(key);
+                right = new Tree(key, index+1);
                 right->parent = this;
+                right->index = index + 1;
             } else {
                 right->dodaj(key);
             }
@@ -80,26 +77,107 @@ public:
             delete right;
             right= nullptr;
         }
-        //todo: zeby usuwalo wszystko, korzen zostaje
     }
 
-    Tree* findNode(T key){
+    Tree* findNode(T key, int&foundIndex){
         if(this== nullptr){
             return nullptr;
         }
 
         if (this->key==key){
+            foundIndex = this->index;
             return this;
         } else if (key< this->key){
             if (left!= nullptr){
-                return left->findNode(key);
+                return left->findNode(key, foundIndex);
             }
         } else{
             if (right != nullptr){
-                return right->findNode(key);
+                return right->findNode(key, foundIndex);
             }
         }
         return nullptr;
+    }
+
+    int getHeight(){
+        int height = 0;
+        if (this == nullptr) {
+            cout << "Drzewo jest puste" << endl;
+            return 0;
+        }
+        else{
+            int leftHeight = 0;
+            int rightHeight = 0;
+
+            if (left != nullptr) {
+                leftHeight = left->getHeight();
+            }
+
+            if (right != nullptr) {
+                rightHeight = right->getHeight();
+            }
+
+            return max(leftHeight, rightHeight) + 1;
+        }
+    }
+
+    void heightMessage(){
+        cout<<"Wysokosc drzewa wynosi: "<<getHeight()<<endl;
+    }
+
+    bool usun(T key){
+        if (key<this->key){
+            if(left!= nullptr){
+                if (left->key==key){
+                    delete left;
+                    left= nullptr;
+                    cout<<"Udalo sie usunac wezel"<<endl;
+                    return true;
+                } else{
+                    return left->usun(key);
+                }
+            }
+        } else if (key > this->key){
+            if(right!= nullptr){
+                if (right->key==key){
+                    delete right;
+                    right= nullptr;
+                    cout<<"Udalo sie usunac wezel"<<endl;
+                    return true;
+                }else{
+                    return right->usun(key);
+                }
+            }
+        }
+        cout<<"Wezel nie istnieje"<<endl;
+        return false;
+    }
+
+    void wyswietl(int poziom = 0) {
+        if (this == nullptr) {
+            cout<<"Drzewo jest puste"<<endl;
+            return;
+        }
+
+        if (right != nullptr) {
+            right->wyswietl(poziom + 1);
+        }
+
+        for (int i = 0; i < poziom; i++) {
+            cout << "    ";
+        }
+        cout << key << endl;
+
+        if (left != nullptr) {
+            left->wyswietl(poziom + 1);
+        }
+    }
+    void wyswietlLewo(){
+
+    }
+
+    void zmienKorzen(T nowy){
+        this->key=nowy;
     }
 
 

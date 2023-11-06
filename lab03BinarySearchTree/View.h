@@ -19,7 +19,8 @@ public:
         cout<<"6. Wyczysc drzewo"<<endl;
         cout<<"7. Wyznacz wysokosc"<<endl;
         cout<<"8. Wyswietl drzewo"<<endl;
-        cout<<"9. Zakoncz prace programu"<<endl;
+        cout<<"9. Zmien wartosc korzenia"<<endl;
+        cout<<"10. Zakoncz prace programu"<<endl;
     }
 };
 
