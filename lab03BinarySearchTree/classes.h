@@ -21,7 +21,6 @@ public:
 
 
     Tree(T key) : key(key), left(nullptr), right(nullptr), parent(nullptr) {}
-    //Tree()= default;
     ~Tree()= default;
 
     void dodaj(T key) {
@@ -44,20 +43,66 @@ public:
 
     T getWartosc(){
         T wartosc;
-        cout<<"Podaj wartosc do wprowadzenia: ";
+        cout<<"Podaj wartosc: ";
         cin>>wartosc;
         return wartosc;
     }
 
-    void showTree(){
+    void inOrder(){
         if (left != nullptr) {
-            left->showTree();
+            left->inOrder();
         }
         cout << key << " ";
         if (right != nullptr) {
-            right->showTree();
+            right->inOrder();
         }
     }
+
+    void preorder(){
+        cout<<key<<" "; //korzen
+
+        if(left != nullptr){
+            left->preorder();
+        }
+        if (right!= nullptr){
+            right->preorder();
+        }
+    }
+
+    void clear(){
+        if (left != nullptr){
+            left->clear();
+            delete left;
+            left= nullptr;
+        }
+        if(right!= nullptr){
+            right->clear();
+            delete right;
+            right= nullptr;
+        }
+        //todo: zeby usuwalo wszystko, korzen zostaje
+    }
+
+    Tree* findNode(T key){
+        if(this== nullptr){
+            return nullptr;
+        }
+
+        if (this->key==key){
+            return this;
+        } else if (key< this->key){
+            if (left!= nullptr){
+                return left->findNode(key);
+            }
+        } else{
+            if (right != nullptr){
+                return right->findNode(key);
+            }
+        }
+        return nullptr;
+    }
+
+
 
 
 

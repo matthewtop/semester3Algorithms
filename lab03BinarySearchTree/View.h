@@ -10,6 +10,7 @@ class View{
 public:
 
     static void mainMenu(){
+        cout<<endl;
         cout<<"1. Dodaj element"<<endl;
         cout<<"2. Wyszukaj element"<<endl;
         cout<<"3. Usun wezel"<<endl;
