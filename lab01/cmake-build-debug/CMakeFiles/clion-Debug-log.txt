@@ -1,1 +1,0 @@
-CMakeLists.txt not found in D:\dev\semestr3\algo2\lab01 Select CMakeLists.txt
