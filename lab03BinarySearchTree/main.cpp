@@ -12,6 +12,7 @@ int main() {
     bool dzialanie = true;
     do {
         View::mainMenu();
+        cout<<"Twoj wybor: ";
         cin >> wybor;
         switch (wybor) {
             case 1: {

@@ -91,11 +91,13 @@ public:
         if (this->key==key){
             index = this->index;
             return true;
-        } else if (key< this->key){
+        }
+        else if (key< this->key){
             if (left!= nullptr){
                 return left->znajdz(key, index);
             }
-        } else{
+        }
+        else{
             if (right != nullptr){
                 return right->znajdz(key, index);
             }
@@ -106,7 +108,8 @@ public:
     bool checkIfTreeIsNotEmpty(){
         if (left == nullptr && right == nullptr) {
             return false;
-        } else{
+        }
+        else{
             return true;
         }
     }
@@ -143,22 +146,26 @@ public:
                 } else {
                     return left->usun(key);
                 }
-            } else {
+            }
+            else {
                 View::wezelNieIstnieje();
                 return false;
             }
-        } else if (key > this->key) {
+        }
+        else if (key > this->key) {
             if (right != nullptr) {
                 if (right->key == key) {
                     return deleteRight();
                 } else {
                     return right->usun(key);
                 }
-            } else {
+            }
+            else {
                 View::wezelNieIstnieje();
                 return false;
             }
-        } else {
+        }
+        else {
             View::wezelNieIstnieje();
             return false;
         }
