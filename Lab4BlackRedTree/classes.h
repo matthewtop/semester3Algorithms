@@ -1,0 +1,10 @@
+#ifndef LAB4BLACKREDTREE_CLASSES_H
+#define LAB4BLACKREDTREE_CLASSES_H
+
+
+class classes {
+
+};
+
+
+#endif //LAB4BLACKREDTREE_CLASSES_H

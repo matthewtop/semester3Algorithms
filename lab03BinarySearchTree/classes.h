@@ -14,7 +14,6 @@ public:
     Tree *parent;
     int index;
 
-    Tree() : key(T()), left(nullptr), right(nullptr), parent(nullptr), index(-1) {}
     Tree(T key, int index) : key(key), left(nullptr), right(nullptr), parent(nullptr), index(index) {}
     ~Tree()= default;
 
@@ -40,7 +39,7 @@ public:
 
     void dodajLosowo(int ilosc){
         for (int i = 0; i < ilosc; i++) {
-            T losowaWartosc=(rand()%101);
+            T losowaWartosc=rand();
             dodaj(losowaWartosc);
         }
     }
@@ -203,11 +202,5 @@ public:
     void zmienKorzen(T nowy){
         this->key=nowy;
     }
-
-
 };
-
-
-
-
 #endif //LAB03_CLASSES_H
