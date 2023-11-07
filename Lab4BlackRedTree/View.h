@@ -19,7 +19,7 @@ public:
         cout<<"|       7. Napisowa reprezentacja drzewa    |"<<endl;
         cout<<"|       8. Rotacja w lewo                   |"<<endl;
         cout<<"|       9. Rotacja w prawo                  |"<<endl;
-        cout<<"|       10. Zmien wartosc korzenia          |"<<endl;
+        cout<<"|      10. Zakoncz prace programu           |"<<endl;
         cout<<"============================================="<<endl;
         cout<<"Twoj wybor: ";
 

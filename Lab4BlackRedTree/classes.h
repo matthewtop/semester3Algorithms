@@ -1,10 +1,30 @@
-#ifndef LAB4BLACKREDTREE_CLASSES_H
-#define LAB4BLACKREDTREE_CLASSES_H
+#include <iostream>
 
+using namespace std;
 
-class classes {
-
+template <typename T>
+class Node{
+public:
+    T data;
+    Node<T> *left;
+    Node<T> *right;
+    Node<T> *parent;
+    string color;
 };
 
 
-#endif //LAB4BLACKREDTREE_CLASSES_H
+template <typename T>
+class BRTree{
+public:
+    Node<T>* root;
+    Node<T>* puste;
+
+    void iniNull(Node<T> node, Node<T> parent){
+        node->data;
+        node->parent=parent;
+        node->left= nullptr;
+        node->right= nullptr;
+        node->color="black";
+    }
+
+};
