@@ -1,6 +1,7 @@
 #ifndef LAB4BLACKREDTREE_VIEW_H
 #define LAB4BLACKREDTREE_VIEW_H
 
+
 #include <iostream>
 
 using namespace std;
@@ -23,6 +24,10 @@ public:
         cout<<"============================================="<<endl;
         cout<<"Twoj wybor: ";
 
+    }
+
+    static void heightMess(int wysokosc){
+        cout<<"Wysokosc drzewa: "<<wysokosc<<endl;
     }
 
 };
