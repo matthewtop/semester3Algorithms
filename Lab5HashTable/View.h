@@ -1,5 +1,5 @@
-#ifndef LAB5HASHTABLE_VIEW_H
-#define LAB5HASHTABLE_VIEW_H
+#ifndef TEST_VIEW_H
+#define TEST_VIEW_H
 #include <iostream>
 using namespace std;
 
@@ -13,14 +13,47 @@ public:
         cout<<"|       3. Usun element                  |"<<endl;
         cout<<"|       4. Wyczysc tablice               |"<<endl;
         cout<<"|       5. Wyswietl tablice              |"<<endl;
-        cout<<"|       6. Rozszerz i przemieszaj tablice|"<<endl;
-        cout<<"|       7. Wyswietl statystyki           |"<<endl;
-        cout<<"|       8. Zakoncz dzialanie             |"<<endl;
+        cout<<"|       6. Wyswietl statystyki           |"<<endl;
+        cout<<"|       7. Zakoncz dzialanie             |"<<endl;
         cout<<"=========================================="<<endl;
         cout<<"Twoj wybor: ";
+    }
+
+    static void getKey(){
+        cout<<"Podaj klucz: ";
+    }
+
+    static void getValue(){
+        cout<<"Podaj wartosc: ";
+    }
+
+    static void getIlosc(){
+        cout<<"Podaj ilosc: ";
+    }
+
+    static void showStats(int size, int maxSize, int noZero){
+        cout << "Obecny rozmiar: " << size << endl;
+        cout << "Maxymalny rozmiar: " << maxSize << endl;
+        cout << "Liczba niepustych kubelkow: " << noZero << endl;
+        cout << "Nullowe kubelki: " << maxSize-noZero<<endl;
+    }
+
+    static void nieZnalezionoElInfo(){
+        cout<<"Nie znaleziono elementu o tym kluczu"<<endl;
+    }
+
+    static void usunietoElementInfo(){
+        cout<<"Udalo sie usunac element"<<endl;
+    }
+
+    static void wrongValueError(){
+        fprintf(stderr, "Niepoprawna wartosc");
+    }
+    static void wrongChoiceError(){
+        fprintf(stderr, "Zly wybor");
     }
 
 };
 
 
-#endif //LAB5HASHTABLE_VIEW_H
+#endif //TEST_VIEW_H

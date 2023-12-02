@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "D:/dev/semestr3/algo2/test/cmake-build-debug",
-		"source" : "D:/dev/semestr3/algo2/test"
+		"build" : "D:/dev/semestr3/algo2/Lab5HashTable/cmake-build-debug",
+		"source" : "D:/dev/semestr3/algo2/Lab5HashTable"
 	},
 	"version" : 
 	{

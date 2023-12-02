@@ -1,192 +1,194 @@
-#ifndef LAB5HASHTABLE_HASHTABLE_H
-#define LAB5HASHTABLE_HASHTABLE_H
-
 #include <iostream>
 #include <list>
+#include <vector>
+#include <ctime>
 #include <sstream>
+#include "View.h"
 
 using namespace std;
 
-template <typename T>
+template <typename K, typename V>
 class HashTable {
 public:
-
     int size;
     int maxSize;
-    T* hashtable;
+    vector<list<pair<K, V>>> hashtable;
 
-    HashTable() {
-        size = 0;
-        maxSize = 2;
-        hashtable = new T[maxSize];
-    }
+    HashTable() : size(0), maxSize(2), hashtable(2) {}
 
-    ~HashTable() {delete[] hashtable;}
+    ~HashTable() = default;
 
-    int hash(T element) {
-        return element % maxSize;
+    int hash(const K& key) {
+        return (key) % maxSize;
     }
 
     void rehash() {
         maxSize *= 2;
-        T* temp = new T[maxSize];
+        vector<list<pair<K, V>>> temp(maxSize);
 
-        for (int i = 0; i < size; i++) {
-            int index = hash(hashtable[i]);
-            temp[index] = hashtable[i];
+        for (auto& bucket : hashtable) {
+            for (auto& kvPair : bucket) {
+                int index = hash(kvPair.first);
+                temp[index].push_back(kvPair);
+            }
         }
-
-        delete[] hashtable;
         hashtable = temp;
     }
 
-    void insert(T element) {
+    void insert(K& key, V& value) {
         if (size >= maxSize) {
             rehash();
         }
 
-        for (int i = 0; i < size; ++i) {
-            if (hashtable[i] == element) {
-                cout << "Element o kluczu " << element << " juz istnieje." << endl;
+        int index = hash(key);
+        auto& bucket = hashtable[index];
+
+        auto iterator = bucket.begin();
+        while (iterator != bucket.end()) {
+            if (iterator->first == key) {
+                cout << "Element o kluczu " << key << " juz istnieje." << endl;
                 return;
             }
+            iterator++;
         }
-        hashtable[size++] = element;
+
+        bucket.emplace_back(key, value);
+        size++;
+    }
+
+    int getIlosc(){
+        int ilosc;
+        View::getIlosc();
+        cin>>ilosc;
+        return ilosc;
     }
 
 
-    void addMaxSize(){
-        maxSize *=2;
-        T *temp = new T[maxSize];
-
-        for(int i=0; i<size;i++){
-            temp[i] = hashtable[i];
-        }
-        delete[] hashtable;
-        hashtable=temp;
-    }
-
-    void checkSize(){
-        if(size >= maxSize)
-            addMaxSize();
-    }
-
-    void checkIfArrayIsNotEmpty(){
-        if(size==0){
-            cout<<"Tablica jest pusta"<<endl;
-            return;
-        }
-    }
-
-    void insert() {
-        T element;
-        cout << "Podaj element: " << endl;
-        cin >> element;
-        for (int i = 0; i < size; ++i) {
-            if (hashtable[i] == element) {
-                cout << "Element o kluczu " << element << " już istnieje. Nie można wstawić duplikatu." << endl;
-                return;
-            }
-        }
+    void insertRandomValues(int numOfElem) {
         clock_t t1 = clock();
-        checkSize();
-        hashtable[size++] = element;
-        clock_t t2 = clock();
-        double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
-        double miliseconds = seconds * 1000;
-        cout << miliseconds << " ms" << endl;
-    }
-
-    void insertRandomValues() {
-        int numOfElem;
-        cout << "Podaj ilosc elementow do wygenerowania i wprowadzenia: " << endl;
-        cin >> numOfElem;
-
         if (numOfElem < 0) {
-            cout << "Niepoprawna wartosc" << endl;
+            View::wrongValueError();
             return;
         }
 
-        clock_t t1 = clock();
         srand(static_cast<unsigned>(time(nullptr)));
 
         for (int i = 0; i < numOfElem; i++) {
-            T randomValue = rand();
-            insert(randomValue);
+            string randomValue;
+            for (int j = 0; j < 6; j++) {
+                char randomChar = 'a' + (rand() % 26);
+                randomValue.push_back(randomChar);
+            }
+
+            int randomKey = rand() % 1000;
+            insert(randomKey, randomValue);
         }
-
-        clock_t t2 = clock();
-        double seconds = (t2 - t1) / (double)CLOCKS_PER_SEC;
-        double milliseconds = seconds * 1000;
-        cout << milliseconds << " ms" << endl;
-    }
-
-    T& search(int index) {
-        checkIfArrayIsNotEmpty();
-        if (index >= size)
-            cout << "Niepoprawny index" << endl;
-        cout << index << ": " << hashtable[index] << " -> " << hash(hashtable[index]) << "; " << endl;
-        return hashtable[index];
-    }
-
-
-    void clearTable(){
-        checkIfArrayIsNotEmpty();
-        clock_t t1 = clock();
-        delete[] hashtable;
-        size=0;
-        maxSize=50;
-        hashtable = new T[maxSize];
         clock_t t2 = clock();
         double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
         double miliseconds = seconds*1000;
         cout << miliseconds << " ms" << endl;
     }
 
-    string toString() {
-        checkIfArrayIsNotEmpty();
-        stringstream result;
-
+    void print() {
         clock_t t1 = clock();
-        for (int i = 0; i < size; i++) {
-            result << i << ": " << hashtable[i] << " -> " << hash(hashtable[i]) << "; \n";
+        for (int i = 0; i < maxSize; i++) {
+            cout << "[" << i << "]";
+            for (const auto& kvPair : hashtable[i]) {
+                cout << " (" << kvPair.first << " -> " << kvPair.second << ") ";
+            }
+            cout << endl;
         }
         clock_t t2 = clock();
+        double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+        double miliseconds = seconds*1000;
+        cout << miliseconds << " ms" << endl;
+    }
 
-        double seconds = (t2 - t1) / (double)CLOCKS_PER_SEC;
+    void search(K& key) {
+        clock_t t1 = clock();
+
+        int index = hash(key);
+        const auto& bucket = hashtable[index];
+
+        auto iterator = bucket.begin();
+
+        if (iterator != bucket.end()) {
+            if (iterator->first == key) {
+                cout << "Znaleziono element o kluczu " << key << ": (" << iterator->first << ", " << iterator->second << ")" << endl;
+                clock_t t2 = clock();
+                double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+                double miliseconds = seconds * 1000;
+                cout << miliseconds << " ms" << endl;
+                return;
+            }
+        } else {
+            View::nieZnalezionoElInfo();
+        }
+
+        clock_t t2 = clock();
+        double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
         double miliseconds = seconds * 1000;
         cout << miliseconds << " ms" << endl;
-        return result.str();
     }
 
-    void usun(int index) {
-        if (index >= 0 && index < size) {
-            for (int i = index; i < size - 1; i++) {
-                hashtable[i] = hashtable[i + 1];
+    void clear() {
+        clock_t t1 = clock();
+        for (auto& bucket : hashtable) {
+            bucket.clear();
+        }
+        size = 0;
+        maxSize = 2;
+        hashtable.resize(2);
+        clock_t t2 = clock();
+        double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+        double miliseconds = seconds*1000;
+        cout << miliseconds << " ms" << endl;
+    }
+
+    void stats() {
+        clock_t t1 = clock();
+        int noZero= 0;
+
+        for (const auto& bucket : hashtable) {
+            if (!bucket.empty()) {
+                noZero++;
             }
-            size--;
+        }
+        View::showStats(size, maxSize,noZero);
+
+        cout<<endl;
+
+        clock_t t2 = clock();
+        double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+        double miliseconds = seconds*1000;
+        cout << miliseconds << " ms" << endl;
+    }
+
+    void usun(K& key) {
+        clock_t t1 = clock();
+        int index = hash(key);
+        auto& bucket = hashtable[index];
+
+        auto iterator = bucket.begin();
+
+        if (iterator != bucket.end()) {
+            if (iterator->first == key) {
+                bucket.erase(iterator);
+                size--;
+                View::usunietoElementInfo();
+                clock_t t2 = clock();
+                double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+                double miliseconds = seconds * 1000;
+                cout << miliseconds << " ms" << endl;
+                return;
+            }
         } else {
-            cout << "Zly index" << endl;
+            View::nieZnalezionoElInfo();
         }
-    }
 
-    int liczBezZer() {
-        int nonZeroCount = 0;
-        for (int i = 0; i < size; ++i) {
-            if (hashtable[i] != 0) {
-                nonZeroCount++;
-            }
-        }
-        return nonZeroCount;
-    }
-
-    void stats(){
-        int niezerowe = liczBezZer();
-        cout<<"Obecny rozmiar: "<<size<<endl;
-        cout<<"Maxymalny rozmiar: "<<maxSize<<endl;
-        cout << "Liczba niezerowych wartosci: " << niezerowe << endl;
-        cout<<"Liczba nullowych kubelkow: "<< maxSize-niezerowe<<endl;
+        clock_t t2 = clock();
+        double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+        double miliseconds = seconds * 1000;
+        cout << miliseconds << " ms" << endl;
     }
 };
-
-#endif //LAB5HASHTABLE_HASHTABLE_H

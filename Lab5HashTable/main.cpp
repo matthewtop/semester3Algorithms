@@ -1,12 +1,13 @@
 #include <iostream>
-#include <time.h>
-#include <string>
-#include "View.h"
 #include "HashTable.h"
+#include "View.h"
+#include <string>
+
 using namespace std;
 
 int main() {
-    HashTable<int> hashTable{};
+
+    HashTable<int, string> hashTable;
     int wybor;
     bool dzialanie=true;
 
@@ -15,56 +16,55 @@ int main() {
         cin>>wybor;
         switch(wybor) {
             case 0:{
-                hashTable.insertRandomValues();
+                hashTable.insertRandomValues(hashTable.getIlosc());
                 break;
             }
             case 1: {
-                hashTable.insert();
-                break;
-            }
-            case 2:{
-                int index;
-                cout<<"Podaj index: ";
-                cin>>index;
+                int klucz;
+                string value;
+                View::getKey();
+                cin>>klucz;
+                View::getValue();
+                cin>>value;
                 clock_t t1 = clock();
-                int wynik = hashTable.search(index);
-                cout<<wynik<<endl;
+                hashTable.insert(klucz,value);
                 clock_t t2 = clock();
                 double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
                 double miliseconds = seconds*1000;
                 cout << miliseconds << " ms" << endl;
                 break;
             }
+            case 2:{
+                int klucz;
+                View::getKey();
+                cin>>klucz;
+                hashTable.search(klucz);
+                break;
+            }
             case 3: {
-                int index;
-                cout<<"Podaj index: ";
-                cin>>index;
-                hashTable.usun(index);
+                int klucz;
+                View::getKey();
+                cin>>klucz;
+                hashTable.usun(klucz);
                 break;
             }
             case 4: {
-                hashTable.clearTable();
+                hashTable.clear();
                 break;
             }
             case 5: {
-                cout<<hashTable.toString()<<endl;
-                cout<<endl;
-                hashTable.stats();
+                hashTable.print();
                 break;
             }
             case 6:{
-                hashTable.rehash();
-                break;
-            }
-            case 7: {
                 hashTable.stats();
                 break;
             }
-            case 8:
+            case 7:
                 dzialanie=false;
                 break;
             default: {
-                cout << "Nieprawidlowy wybor" << endl;
+                View::wrongChoiceError();
                 break;
             }
         }
