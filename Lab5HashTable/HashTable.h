@@ -18,7 +18,7 @@ public:
 
     ~HashTable() = default;
 
-    int hash(const K& key) {
+    int hash(K& key) {
         return (key) % maxSize;
     }
 
@@ -26,10 +26,10 @@ public:
         maxSize *= 2;
         vector<list<pair<K, V>>> temp(maxSize);
 
-        for (auto& bucket : hashtable) {
-            for (auto& kvPair : bucket) {
-                int index = hash(kvPair.first);
-                temp[index].push_back(kvPair);
+        for (int i = 0; i < hashtable.size(); i++) {
+            for (auto iterator = hashtable[i].begin(); iterator != hashtable[i].end(); ++iterator) {
+                int index = hash(iterator->first);
+                temp[index].push_back(*iterator);
             }
         }
         hashtable = temp;
@@ -93,7 +93,7 @@ public:
         clock_t t1 = clock();
         for (int i = 0; i < maxSize; i++) {
             cout << "[" << i << "]";
-            for (const auto& kvPair : hashtable[i]) {
+            for (auto& kvPair : hashtable[i]) {
                 cout << " (" << kvPair.first << " -> " << kvPair.second << ") ";
             }
             cout << endl;
@@ -147,20 +147,21 @@ public:
 
     void stats() {
         clock_t t1 = clock();
-        int noZero= 0;
+        int noZero = 0;
 
-        for (const auto& bucket : hashtable) {
-            if (!bucket.empty()) {
+        for (int i = 0; i < hashtable.size(); ++i) {
+            if (!hashtable[i].empty()) {
                 noZero++;
             }
         }
-        View::showStats(size, maxSize,noZero);
 
-        cout<<endl;
+        View::showStats(size, maxSize, noZero);
+
+        cout << endl;
 
         clock_t t2 = clock();
         double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
-        double miliseconds = seconds*1000;
+        double miliseconds = seconds * 1000;
         cout << miliseconds << " ms" << endl;
     }
 
@@ -186,9 +187,5 @@ public:
             View::nieZnalezionoElInfo();
         }
 
-        clock_t t2 = clock();
-        double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
-        double miliseconds = seconds * 1000;
-        cout << miliseconds << " ms" << endl;
     }
 };
