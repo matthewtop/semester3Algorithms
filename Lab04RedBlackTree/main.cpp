@@ -5,18 +5,23 @@
 using namespace std;
 
 int main(){
-
     RBT * rbt = new RBT();
-
     int wybor;
     bool dzialanie= true;
     do{
         View::mainMenu();
         cin>>wybor;
         switch (wybor) {
+            case 0:{
+                rbt->insertRandomValues();
+                break;
+            }
             case 1:{
                 clock_t t1 = clock();
-                //todo:
+                int wartosc;
+                View::getIlosc();
+                cin>>wartosc;
+                rbt->search(wartosc);
                 clock_t t2 = clock();
                 double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
                 double miliseconds = seconds*1000;
@@ -53,9 +58,14 @@ int main(){
             }
             case 6:{
                 int wartosc;
-                cout<<"Podaj wartosc: ";
+                View::getWartosc();
                 cin>>wartosc;
+                clock_t t1 = clock();
                 rbt->insert(wartosc);
+                clock_t t2 = clock();
+                double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+                double miliseconds = seconds*1000;
+                cout << miliseconds << " ms" << endl;
                 break;
             }
             case 7:{
@@ -90,7 +100,7 @@ int main(){
                 break;
             }
             default:{
-                cout<<"Nieprawidlowy wybor sprobuj ponownie"<<endl;
+                View::nieprawidlowyWyborError();
                 break;
             }
         }

@@ -10,7 +10,6 @@ enum Color {
 
 class TreeNode {
     public:
-
         int data;
         TreeNode * left;
         TreeNode * right;
@@ -53,7 +52,6 @@ class TreeNode {
             TreeNode * parent = nullptr;
 
             while(current != nullptr){
-
                 parent = current;
 
                 if(newNode->data < current->data){
@@ -65,7 +63,6 @@ class TreeNode {
                     delete newNode;
                     return nullptr;
                 }
-
             }
 
             newNode->parent = parent;
@@ -84,7 +81,7 @@ class TreeNode {
                 return;
 
             if (isRoot) {
-                cout << "-------";
+                cout << "R O O T";
             } else {
                 cout << prefix <<
                      (isLeft ? "L-------" : "R------");
@@ -92,9 +89,9 @@ class TreeNode {
 
             cout << " " << parent->color << " - " <<  parent -> data << endl;
 
-            print(prefix + (isLeft ? " │   " : "    "),
+            print(prefix + (isLeft ? " |   " : "    "),
                   parent -> left, true, false);
-            print(prefix + (isLeft ? " │   " : "    "),
+            print(prefix + (isLeft ? " |   " : "    "),
                   parent -> right, false, false);
         }
 
@@ -199,7 +196,6 @@ class TreeNode {
         }
 
         void rightRotate(TreeNode * x){
-
             TreeNode * y = x->left;
 
             x->left = y->right;
@@ -246,7 +242,6 @@ class TreeNode {
             double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
             double miliseconds = seconds*1000;
             cout << miliseconds << " ms" << endl;
-
         }
 
         void clear(TreeNode *node){
@@ -256,7 +251,42 @@ class TreeNode {
             }
         }
 
+        void insertRandomValues(){
+            int ilosc;
+            View::getIlosc();
+            cin>>ilosc;
+            clock_t t1 = clock();
+            srand(static_cast<unsigned>(time(nullptr)));
+            for(int i=0; i<ilosc; i++){
+                insert(rand()%1000);
+            }
+            clock_t t2 = clock();
+            double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+            double miliseconds = seconds*1000;
+            cout << miliseconds << " ms" << endl;
+        }
 
+
+        void search(int value) {
+            TreeNode* wynik = searchNode(root, value);
+            if (wynik != nullptr) {
+                cout << "Node: " << wynik->data << " (Color: " << (wynik->color ? "RED" : "BLACK") << ")" << endl;
+            } else {
+                View::elementNieIstniejeError();
+            }
+        }
+
+        TreeNode* searchNode(TreeNode* node, int value) {
+            if (node == nullptr || node->data == value) {
+                return node;
+            }
+
+            if (value < node->data) {
+                return searchNode(node->left, value);
+            } else {
+                return searchNode(node->right, value);
+            }
+        }
     };
 #endif // CLASSES_H
 
