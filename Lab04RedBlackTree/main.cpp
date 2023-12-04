@@ -44,12 +44,7 @@ int main(){
                 break;
             }
             case 4:{
-                clock_t t1 = clock();
                 rbt->clearTree();
-                clock_t t2 = clock();
-                double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
-                double miliseconds = seconds*1000;
-                cout << miliseconds << " ms" << endl;
                 break;
             }
             case 5:{

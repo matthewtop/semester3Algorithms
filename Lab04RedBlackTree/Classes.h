@@ -239,8 +239,14 @@ class TreeNode {
         }
 
         void clearTree() {
+            clock_t t1 = clock();
             clear(root);
             root = nullptr;
+            clock_t t2 = clock();
+            double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+            double miliseconds = seconds*1000;
+            cout << miliseconds << " ms" << endl;
+
         }
 
         void clear(TreeNode *node){
