@@ -7,76 +7,69 @@ using namespace std;
 enum Color {
     RED, BLACK
 };
-
+template<typename T>
 class TreeNode {
     public:
-        int data;
-        TreeNode * left;
-        TreeNode * right;
-        TreeNode * parent;
-        Color color;
+    T data;
+    TreeNode<T>* left;
+    TreeNode<T>* right;
+    TreeNode<T>* parent;
+    Color color;
 
-        TreeNode(int data) {
-            this->data = data;
-            this->left = nullptr;
-            this->right = nullptr;
-            this->parent = nullptr;
-            color = RED;
-        }
+    TreeNode(T data) : data(data), left(nullptr), right(nullptr), parent(nullptr), color(RED) {}
 
-        ~TreeNode(){
-            delete left;
-            delete right;
-            delete parent;
-        }
+    ~TreeNode() {
+        delete left;
+        delete right;
+        delete parent;
+    }
     };
 
-    class BST {
-    public:
-        TreeNode * root;
+template<typename T>
+class BST {
+public:
+    TreeNode<T>* root;
+    BST() {root = nullptr;}
 
-        BST() {root = nullptr;}
+    ~BST() {delete root;}
 
-        ~BST() {delete root;}
+    virtual TreeNode<T>* insert(T data) {
+        auto * newNode = new TreeNode(data);
 
-        virtual TreeNode * insert(int data) {
-            auto * newNode = new TreeNode(data);
+        if (root == nullptr) {
+            root = newNode;
+            root->color=BLACK;
+            return root;
+        }
 
-            if (root == nullptr) {
-                root = newNode;
-                root->color=BLACK;
-                return root;
+        TreeNode<T>* current = root;
+        TreeNode<T>* parent = nullptr;
+
+        while(current != nullptr){
+            parent = current;
+
+            if(newNode->data < current->data){
+                current = current->left;
+            } else if (newNode->data > current->data) {
+                current = current->right;
             }
-
-            TreeNode * current = root;
-            TreeNode * parent = nullptr;
-
-            while(current != nullptr){
-                parent = current;
-
-                if(newNode->data < current->data){
-                    current = current->left;
-                } else if (newNode->data > current->data) {
-                    current = current->right;
-                }
-                else {
-                    delete newNode;
-                    return nullptr;
-                }
+            else {
+                delete newNode;
+                return nullptr;
             }
+        }
 
-            newNode->parent = parent;
+        newNode->parent = parent;
 
-            if(newNode->data < parent->data){
-                parent->left = newNode;
-            } else {
-                parent->right = newNode;
-            }
-
+        if(newNode->data < parent->data){
+            parent->left = newNode;
+        } else {
+            parent->right = newNode;
+        }
             return newNode;
         }
 
-        void print(const string &prefix, TreeNode * parent, bool isLeft, bool isRoot) {
+        void print(const string &prefix, TreeNode<T> * parent, bool isLeft, bool isRoot) {
             if (parent == nullptr)
                 return;
 
@@ -100,7 +93,7 @@ class TreeNode {
         }
 
 
-        int height(TreeNode *node) {
+        int height(TreeNode<T> *node) {
             if (node == nullptr)
                 return 0;
 
@@ -115,27 +108,32 @@ class TreeNode {
         }
     };
 
-    class RBT : public BST {
-    public:
+template<typename T>
+class RBT : public BST<T> {
+public:
 
-        RBT(){}
+    RBT(){}
 
-        ~RBT(){}
+   ~RBT(){}
 
-        TreeNode * insert(int data) override {
+    TreeNode<T>* insert(T data) override {
+        clock_t t1 = clock();
+        TreeNode<T>* newNode = BST<T>::insert(data);
+           if (newNode != nullptr) {
+               dodajFix(newNode);
+           }
+           return newNode;
+        clock_t t2 = clock();
+        double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
+        double miliseconds = seconds*1000;
+        cout << miliseconds << " ms" << endl;
+    }
 
-            TreeNode * newNode = BST::insert(data);
-            if (newNode != nullptr) {
-                dodajFix(newNode);
-            }
-            return newNode;
-        }
 
-
-        void dodajFix(TreeNode *z){
+    void dodajFix(TreeNode<T>* z){
             while (z->parent != nullptr && z->parent->color == RED) {
                 if (z->parent == z->parent->parent->left) {
-                    TreeNode *y = z->parent->parent->right;
+                    TreeNode<T> *y = z->parent->parent->right;
                     if (y != nullptr && y->color == RED) {
                         z->parent->color = BLACK;
                         y->color = BLACK;
@@ -151,7 +149,7 @@ class TreeNode {
                         rightRotate(z->parent->parent);
                     }
                 } else {
-                    TreeNode *y = z->parent->parent->left;
+                    TreeNode<T> *y = z->parent->parent->left;
                     if (y != nullptr && y->color == RED) {
                         z->parent->color = BLACK;
                         y->color = BLACK;
@@ -168,12 +166,12 @@ class TreeNode {
                     }
                 }
             }
-            root->color = BLACK;
+        this->root->color = BLACK;
         }
 
-        void leftRotate(TreeNode * x){
+        void leftRotate(TreeNode<T> * x){
 
-            TreeNode * y = x->right;
+            TreeNode<T> * y = x->right;
 
             x->right = y->left;
 
@@ -184,7 +182,7 @@ class TreeNode {
             y->parent = x->parent;
 
             if(x->parent == nullptr){
-                BST::root = y;
+                BST<T>::root = y;
             } else if(x == x->parent->left){
                 x->parent->left = y;
             } else {
@@ -195,8 +193,8 @@ class TreeNode {
             x->parent = y;
         }
 
-        void rightRotate(TreeNode * x){
-            TreeNode * y = x->left;
+        void rightRotate(TreeNode<T> * x){
+            TreeNode<T> * y = x->left;
 
             x->left = y->right;
 
@@ -207,7 +205,7 @@ class TreeNode {
             y->parent = x->parent;
 
             if(x->parent == nullptr){
-                BST::root = y;
+                BST<T>::root = y;
             } else if(x == x->parent->right){
                 x->parent->right = y;
             } else {
@@ -218,7 +216,7 @@ class TreeNode {
             x->parent = y;
         }
 
-        void preOrder(TreeNode *node){
+        void preOrder(TreeNode<T> *node){
             if (node != nullptr){
                 cout<<node->data<<" ";
                 preOrder(node->left);
@@ -226,7 +224,7 @@ class TreeNode {
             }
         }
 
-        void inOrder(TreeNode *node) {
+        void inOrder(TreeNode<T> *node) {
             if (node != nullptr) {
                 inOrder(node->left);
                 cout << node->data << " ";
@@ -236,15 +234,15 @@ class TreeNode {
 
         void clearTree() {
             clock_t t1 = clock();
-            clear(root);
-            root = nullptr;
+            clear(this->root);
+            this->root = nullptr;
             clock_t t2 = clock();
             double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
             double miliseconds = seconds*1000;
             cout << miliseconds << " ms" << endl;
         }
 
-        void clear(TreeNode *node){
+        void clear(TreeNode<T> *node){
             if(node!= nullptr){
                 clear(node->left);
                 clear(node->right);
@@ -267,8 +265,8 @@ class TreeNode {
         }
 
 
-        void search(int value) {
-            TreeNode* wynik = searchNode(root, value);
+        void search(T value) {
+            TreeNode<T>* wynik = searchNode(this->root, value);
             if (wynik != nullptr) {
                 cout << "Node: " << wynik->data << " (Color: " << (wynik->color ? "RED" : "BLACK") << ")" << endl;
             } else {
@@ -276,7 +274,14 @@ class TreeNode {
             }
         }
 
-        TreeNode* searchNode(TreeNode* node, int value) {
+        T getValue(){
+            T wartosc;
+            View::getIlosc();
+            cin>>wartosc;
+            return wartosc;
+    }
+
+        TreeNode<T>* searchNode(TreeNode<T>* node, int value) {
             if (node == nullptr || node->data == value) {
                 return node;
             }

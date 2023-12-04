@@ -5,7 +5,7 @@
 using namespace std;
 
 int main(){
-    RBT * rbt = new RBT();
+    auto * rbt = new RBT<int>();
     int wybor;
     bool dzialanie= true;
     do{
@@ -18,10 +18,7 @@ int main(){
             }
             case 1:{
                 clock_t t1 = clock();
-                int wartosc;
-                View::getIlosc();
-                cin>>wartosc;
-                rbt->search(wartosc);
+                rbt->search(rbt->getValue());
                 clock_t t2 = clock();
                 double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
                 double miliseconds = seconds*1000;
@@ -57,15 +54,7 @@ int main(){
                 break;
             }
             case 6:{
-                int wartosc;
-                View::getWartosc();
-                cin>>wartosc;
-                clock_t t1 = clock();
-                rbt->insert(wartosc);
-                clock_t t2 = clock();
-                double seconds = (t2 - t1) / (double) CLOCKS_PER_SEC;
-                double miliseconds = seconds*1000;
-                cout << miliseconds << " ms" << endl;
+                rbt->insert(rbt->getValue());
                 break;
             }
             case 7:{
