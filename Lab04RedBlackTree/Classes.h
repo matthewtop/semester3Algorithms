@@ -23,7 +23,7 @@ class TreeNode {
         delete right;
         delete parent;
     }
-    };
+};
 
 template<typename T>
 class BST {
@@ -106,7 +106,7 @@ public:
         int getHeight() {
             return height(root);
         }
-    };
+};
 
 template<typename T>
 class RBT : public BST<T> {
@@ -292,6 +292,6 @@ public:
                 return searchNode(node->right, value);
             }
         }
-    };
+};
 #endif // CLASSES_H
 

@@ -27,7 +27,7 @@ public:
         vector<list<pair<K, V>>> temp(maxSize);
 
         for (int i = 0; i < hashtable.size(); i++) {
-            for (auto iterator = hashtable[i].begin(); iterator != hashtable[i].end(); ++iterator) {
+            for (auto iterator = hashtable[i].begin(); iterator != hashtable[i].end(); iterator++) {
                 int index = hash(iterator->first);
                 temp[index].push_back(*iterator);
             }
@@ -154,9 +154,7 @@ public:
                 noZero++;
             }
         }
-
         View::showStats(size, maxSize, noZero);
-
         cout << endl;
 
         clock_t t2 = clock();
