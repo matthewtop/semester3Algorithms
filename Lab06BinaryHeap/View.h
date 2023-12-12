@@ -6,7 +6,6 @@
 using namespace std;
 class View {
 public:
-
     static void mainMenu(){
         cout<<"======================================================"<<endl;
         cout<<"|       0. Dodaj losowe elementy                      |"<<endl;
@@ -19,15 +18,13 @@ public:
         cout<<"Twoj wybor: ";
     }
 
-    static void getRandomValues(){ cout << "Podaj ilosc elementow do wygenerowania i wprowadzenia: " << endl;}
+    static void displayMiliseconds(double miliseconds){ cout << miliseconds << " ms" << endl;}
+
+    static void getRandomValues(){ cout << "Podaj ilosc elementow do wygenerowania i wprowadzenia: ";}
     static void getValue(){ cout << "Podaj wartosc: ";}
 
     static void wrongChoiceError(){fprintf(stderr, "Nieprawidlowy wybor\n");}
     static void wrongValueError(){fprintf(stderr, "Nieprawidlowa wartosc\n");}
 
-
-
 };
-
-
 #endif //LAB06BINARYHEAP_VIEW_H

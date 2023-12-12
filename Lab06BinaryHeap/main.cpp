@@ -1,11 +1,9 @@
 #include <iostream>
 #include "View.h"
 #include "Heap.h"
-
 using namespace std;
 
 Heap<int> heap;
-
 
 int main() {
     int wybor;

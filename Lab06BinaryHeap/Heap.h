@@ -52,9 +52,7 @@ public:
         heapArray[size++] = value;
         heapifyUp(size - 1);
         clock_t t2 = clock();
-        double seconds = (t2 - t1) / (double)CLOCKS_PER_SEC;
-        double milliseconds = seconds * 1000;
-        cout << milliseconds << " ms" << endl;
+        liczCzas(t1,t2);
     }
 
     void insertRandomValues(Heap<T>& heap) {
@@ -72,22 +70,17 @@ public:
             heap.insert(randomValue);
         }
         clock_t t2 = clock();
-        double seconds = (t2 - t1) / (double)CLOCKS_PER_SEC;
-        double milliseconds = seconds * 1000;
-        cout << milliseconds << " ms" <<endl;
+        liczCzas(t1,t2);
     }
-
 
     void clearHeap() {
         clock_t t1 = clock();
         delete[] heapArray;
         size = 0;
-        maxSize = 50;
+        maxSize = 1;
         heapArray = new T[maxSize];
         clock_t t2 = clock();
-        double seconds = (t2 - t1) / (double)CLOCKS_PER_SEC;
-        double milliseconds = seconds * 1000;
-        cout << milliseconds << " ms" << endl;
+        liczCzas(t1,t2);
     }
 
     string toString() {
@@ -97,9 +90,7 @@ public:
             result += to_string(heapArray[i]) + " ";
         }
         clock_t t2 = clock();
-        double seconds = (t2 - t1) / (double)CLOCKS_PER_SEC;
-        double milliseconds = seconds * 1000;
-        cout << milliseconds << " ms" << endl;
+        liczCzas(t1,t2);
         return result;
     }
 
@@ -124,9 +115,7 @@ public:
         size--;
         heapifyDown(size - 1);
         clock_t t2 = clock();
-        double seconds = (t2 - t1) / (double)CLOCKS_PER_SEC;
-        double milliseconds = seconds * 1000;
-        cout << milliseconds << " ms" << endl;
+        liczCzas(t1,t2);
         return maxElement;
     }
 
@@ -153,6 +142,12 @@ public:
                 break;
             }
         }
+    }
+
+    void liczCzas(clock_t t1, clock_t t2){
+        double seconds = (t2 - t1) / (double)CLOCKS_PER_SEC;
+        double milliseconds = seconds * 1000;
+        View::displayMiliseconds(milliseconds);
     }
 };
 #endif //LAB06BINARYHEAP_HEAP_H
