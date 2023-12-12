@@ -20,23 +20,19 @@ int main() {
                 break;
             }
             case 1: {
-               //todo
                 heap.insert();
                 break;
             }
             case 2:{
                 heap.extractMax();
-                //todo
                 break;
             }
             case 3: {
                 heap.clearHeap();
-                //todo
                 break;
             }
             case 4: {
                 cout<<heap.toString()<<endl;
-                //todo
                 break;
             }
             case 5: {

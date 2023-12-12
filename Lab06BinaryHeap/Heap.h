@@ -32,8 +32,9 @@ public:
     }
 
     void checkSize() {
-        if (size >= maxSize)
+        if (size >= maxSize) {
             addMaxSize();
+        }
     }
 
     void insert(T element) {
@@ -117,14 +118,15 @@ public:
     }
 
     T extractMax() {
-        if (size == 0) {
-            cerr << "Heap is empty." << endl;
-        }
+        clock_t t1 = clock();
         T maxElement = heapArray[0];
         heapArray[0] = heapArray[size - 1];
         size--;
-        heapifyDown(0);
-
+        heapifyDown(size - 1);
+        clock_t t2 = clock();
+        double seconds = (t2 - t1) / (double)CLOCKS_PER_SEC;
+        double milliseconds = seconds * 1000;
+        cout << milliseconds << " ms" << endl;
         return maxElement;
     }
 
@@ -132,28 +134,25 @@ public:
         while (true) {
             int leftChild = 2 * index + 1;
             int rightChild = 2 * index + 2;
-            int largest = index;
+            int max = index;
 
-            if (leftChild < size && heapArray[leftChild] > heapArray[largest]) {
-                largest = leftChild;
+            if (leftChild < size && heapArray[leftChild] > heapArray[max]) {
+                max = leftChild;
             }
 
-            if (rightChild < size && heapArray[rightChild] > heapArray[largest]) {
-                largest = rightChild;
+            if (rightChild < size && heapArray[rightChild] > heapArray[max]) {
+                max = rightChild;
             }
 
-            if (largest != index) {
+            if (max != index) {
                 T temp = heapArray[index];
-                heapArray[index] = heapArray[largest];
-                heapArray[largest] = temp;
-                index = largest;
+                heapArray[index] = heapArray[max];
+                heapArray[max] = temp;
+                index = max;
             } else {
                 break;
             }
         }
     }
 };
-
-
-
 #endif //LAB06BINARYHEAP_HEAP_H
